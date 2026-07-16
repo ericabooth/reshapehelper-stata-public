@@ -1,4 +1,4 @@
-# reshapehelper
+# ReshapeHelper - Stata program to auto build and diagnose -reshape- syntax
 
 Diagnose the dataset and **suggest** — never run — the likely `reshape`
 command.

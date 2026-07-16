@@ -16,10 +16,10 @@ it never modifies your data.
 
 1. **Scans variable names** for wide patterns: numeric suffixes
    (`inc80 inc81`), string suffixes (`bp_before bp_after`), a j buried
-   mid-name (`inc80r` — the `@` notation), a j hiding in the *prefix*
+   mid-name (`inc80r` - the `@` notation), a j hiding in the *prefix*
    (`qld_p nsw_p vic_p`), and doubly-wide names carrying two indices
    (`ht_k1_t2`).
-2. **Hunts for i and j** — declared structure first (`xtset`/`tsset` panel
+2. **Hunts for i and j**- declared structure first (`xtset`/`tsset` panel
    and time variables, the `svyset` PSU), then `isid` tests over id-looking
    variables, then bounded single-and-pair searches (which is how a compound
    i like *(household, year)* gets found).
@@ -29,22 +29,23 @@ it never modifies your data.
    triggers a duplicates diagnosis and one attempt to extend `i()`.
 4. **Reports three ways**:
    - an ASCII **before/after diagram** in the style of the reshape help
-     file, built from your real variable names and values — the AFTER box is
+     file, built from your real variable names and values- the AFTER box is
      the dry run's actual result;
    - the **suggested syntax with a verdict** (`dry-run PASSED` / `FAILED
-     r(#)`), plus notes and cautions — or, when it cannot discern the
+     r(#)`), plus notes and cautions- or, when it cannot discern the
      design, a **numbered checklist** of what to fix or supply;
    - the command **ready to use**: `r(cmd)` (+ `r(cmd2)` for chained pairs),
      the global `$reshapehelper_cmd`, an unwrapped SMCL file, and
      click-to-run / click-to-view links in the Results window.
 
 For a doubly-wide layout it suggests and tests the two chained reshapes.
+
 When the job is really a transpose (observations stored as columns) it says
 so and points at `xpose` (`sxpose` for strings).
 
 ## Install
 
-`reshapehelper` is self-contained — the command and its help file, with no
+`reshapehelper` is self-contained ... the command and its help file, with no
 external Stata dependencies.
 
 ```stata
@@ -154,7 +155,7 @@ a stale command from an earlier dataset can never fire in a pipeline.
   numbers, and mixed suffix widths (a stray `inc2` beside `inc80–inc82`)
   where reshape runs happily and builds a mostly-missing j group.
 - **Bare string suffixes are not guessed.** `incm`/`incf` are handled only
-  through `stubs()` — automatic splitting of such names is the greedy
+  through `stubs()`- automatic splitting of such names is the greedy
   matching the reshape manual itself warns about (stub `age`, j `nda`,
   courtesy of a variable named `agenda`).
 - **One dimension per pass.** Doubly-wide names get the two-step chain;

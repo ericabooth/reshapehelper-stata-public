@@ -1,13 +1,16 @@
 # ReshapeHelper - Stata program to auto build and diagnose -reshape- syntax
 
-Diagnose the dataset and **suggest** — never run — the likely `reshape`
-command.
+Diagnose the dataset and **suggest** the likely `reshape`
+command based on dataset shape (or minimal guidance). Does not run reshape, but provides code to run successful -reshape-
 
 `reshape` is the Stata command most likely to send an analyst to a
 discussion board: is this wide or long, which variables are `i` and `j`,
 where does `string` go, why `r(9)`, why "no xij variables found"?
 `reshapehelper` answers those questions **before anything is reshaped**, and
 it never modifies your data.
+
+<img width="1214" height="640" alt="reshapehelper" src="https://github.com/user-attachments/assets/5e2ebc85-fca0-4546-8f57-c725c98e52a4" />
+
 
 ## What it does
 

@@ -1,0 +1,3 @@
+v 3
+d reshapehelper: diagnose the dataset and suggest (never run) the likely reshape command
+p reshapehelper

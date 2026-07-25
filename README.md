@@ -166,8 +166,8 @@ a stale command from an earlier dataset can never fire in a pipeline.
   diagnosis. After your own failed attempt, `reshape error` lists the
   offending observations.
 
-## License
+## Author and license
+
+Eric A. Booth, Sr Researcher, Texas 2036 (eric.a.booth@gmail.com).
 
 MIT. See [LICENSE](LICENSE). Copyright (c) 2026 Eric A. Booth.
-
-Support: eric.a.booth@gmail.com

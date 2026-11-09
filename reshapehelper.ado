@@ -1,5 +1,7 @@
-*! version 1.0.0  20260715  Eric A. Booth, Sr Researcher, Texas 2036
+*! version 1.0.1  20261109  Eric A. Booth, Sr Researcher, Texas 2036
 *! reshapehelper: diagnose the data and SUGGEST (never run) the likely reshape
+*! 1.0.1: documentation release (help markup fix, runnable-example pointers,
+*!        README stored-results table completed); no change in behavior.
 *
 *  reshapehelper never reshapes the caller's data.  It scans variable names
 *  for wide patterns, hunts for i/j candidates (honoring xtset/tsset and
@@ -1100,7 +1102,7 @@ program define reshapehelper, rclass
     * 7. Emit
     * =========================================================================
     di as txt _n "{hline 70}"
-    di as txt "reshapehelper 1.0.0 " as txt "{c |} " as res `NFULL' as txt " obs, " ///
+    di as txt "reshapehelper 1.0.1 " as txt "{c |} " as res `NFULL' as txt " obs, " ///
         as res `KFULL' as txt " vars" _c
     if "`xtpanel'`xttime'" != "" di as txt " {c |} xtset: " as res "`xtpanel' `xttime'" _c
     if "`svypsu'" != "" di as txt " {c |} svy psu: " as res "`svypsu'" _c

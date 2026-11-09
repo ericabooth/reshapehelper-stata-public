@@ -1,5 +1,5 @@
 * ===========================================================================
-* test_reshapehelper.do -- test battery for reshapehelper v1.0.0
+* test_reshapehelper.do -- test battery for reshapehelper v1.0.1
 * Run in batch from the package directory:
 *     stata-mp -b do test_reshapehelper.do
 * Judge the run by the log: no r(NNN) errors, no "assertion is false".

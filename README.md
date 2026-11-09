@@ -141,6 +141,7 @@ a stale command from an earlier dataset can never fire in a pipeline.
 | `r(cmd)`, `r(cmd2)` | the suggested command(s); also `$reshapehelper_cmd`(`2`) |
 | `r(preclean)` | a cleaning line to run first (e.g., strip spaces from a string j) |
 | `r(i)`, `r(j)`, `r(stubs)` | the pieces the suggestion uses |
+| `r(icands)`, `r(jcands)` | the i and j candidate lists considered |
 | `r(note)`, `r(caution)`, `r(diagnosis)` | the annotations printed under the suggestion |
 | `r(tested)`, `r(rc)` | dry-run verdict and final return code |
 | `r(smcl)` | path of the unwrapped-suggestion SMCL file |
@@ -165,6 +166,15 @@ a stale command from an earlier dataset can never fire in a pipeline.
   pathology that first appears deep in a tall dataset can escape the
   diagnosis. After your own failed attempt, `reshape error` lists the
   offending observations.
+
+## Changes
+
+- **1.0.1 (2026-11-09):** documentation release. The help's
+  "no xij variables found" markup now renders, the help points to this README
+  and `example_reshapehelper.do` for runnable versions of the abbreviated
+  `input ...` examples, and the stored-results table above lists `r(icands)`
+  and `r(jcands)`. No change in behavior.
+- **1.0.0 (2026-07-15):** first public release.
 
 ## Author and license
 

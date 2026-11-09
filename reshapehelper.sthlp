@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.0.0  2026-07-15}{...}
+{* *! version 1.0.1  2026-11-09}{...}
 {viewerjumpto "Syntax" "reshapehelper##syntax"}{...}
 {viewerjumpto "Description" "reshapehelper##description"}{...}
 {viewerjumpto "What you get back" "reshapehelper##output"}{...}
@@ -48,8 +48,8 @@
 {pstd}
 {help reshape} is the Stata command most likely to send an analyst to a
 discussion board: is this data wide or long, which variables are i and j,
-where does the {cmd:string} option go, why r(9), why {it:no xij variables
-found}?  {cmd:reshapehelper} answers those questions {it:before} anything is
+where does the {cmd:string} option go, why r(9), why
+{it:no xij variables found}?  {cmd:reshapehelper} answers those questions {it:before} anything is
 reshaped.  It never modifies your data.
 
 {pstd}
@@ -152,6 +152,10 @@ the header {c 45} useful when the suggestion surprises you.{p_end}
 
 {marker examples}{...}
 {title:Examples}
+
+{pstd}Examples that show {cmd:input ...} abbreviate the data entry.  Complete,
+runnable versions of every tier are in the package README and in
+{cmd:example_reshapehelper.do} ({cmd:net get reshapehelper}).{p_end}
 
 {pstd}Tier 1 {c 45} the textbook case ({help reshape} Example 1):{p_end}
 {phang2}{cmd:. input id sex inc80 inc81 inc82 ...}{p_end}

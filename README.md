@@ -9,7 +9,7 @@ where does `string` go, why `r(9)`, why "no xij variables found"?
 `reshapehelper` answers those questions **before anything is reshaped**, and
 it never modifies your data.
 
-<img width="1214" height="640" alt="reshapehelper" src="https://github.com/user-attachments/assets/5e2ebc85-fca0-4546-8f57-c725c98e52a4" />
+<img width="1214" height="640" alt="reshapehelper" src="assets/reshapehelper.png" />
 
 
 ## What it does
@@ -47,6 +47,14 @@ so and points at `xpose` (`sxpose` for strings).
 
 `reshapehelper` is self-contained ... the command and its help file, with no
 external Stata dependencies.
+
+From SSC (version 1.0.0):
+
+```stata
+ssc install reshapehelper
+```
+
+From GitHub (version 1.0.1, the latest):
 
 ```stata
 net install reshapehelper, from("https://raw.githubusercontent.com/ericabooth/reshapehelper-stata-public/main/") replace force

@@ -162,8 +162,8 @@ the header {c 45} useful when the suggestion surprises you.{p_end}
 {title:Examples}
 
 {pstd}Examples that show {cmd:input ...} abbreviate the data entry.  Complete,
-runnable versions of every tier are in the package README and in
-{cmd:example_reshapehelper.do} ({cmd:net get reshapehelper}).{p_end}
+runnable versions of every tier are in {cmd:example_reshapehelper.do}, which
+{cmd:ssc install reshapehelper, all} copies to the current folder.{p_end}
 
 {pstd}Tier 1 {c 45} the textbook case ({help reshape} Example 1):{p_end}
 {phang2}{cmd:. input id sex inc80 inc81 inc82 ...}{p_end}

@@ -62,7 +62,7 @@ It works in four moves:
 doubly-wide names carrying two indices ({cmd:ht_k1_t2}).{p_end}
 
 {phang2}2. {bf:Hunt for i and j}.  Declared structure comes first: an
-{help xtset}/{help tsset} panel and time variable and the {help svyset}
+{help xtset} or {help tsset} panel and time variable and the {help svyset}
 primary sampling unit are taken as the analyst's own statement of the
 design.  Then come uniqueness tests ({help isid}) over id-looking variables
 and, when those fail, bounded searches over single variables and pairs

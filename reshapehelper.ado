@@ -1,5 +1,9 @@
-*! version 1.0.1  20261109  Eric A. Booth, Sr Researcher, Texas 2036
+*! version 1.0.2  20261114  Eric A. Booth, Sr Researcher, Texas 2036
 *! reshapehelper: diagnose the data and SUGGEST (never run) the likely reshape
+*! 1.0.2: a failed dry-run verdict prints as text again, so -quietly
+*!        reshapehelper- no longer leaks a bare "FAILED198" (the fix in the
+*!        SSC 1.0.0 release); help restores the SSC text on option
+*!        abbreviations, smcl() naming, conditional returns, and the j ceiling.
 *! 1.0.1: documentation release (help markup fix, runnable-example pointers,
 *!        README stored-results table completed); no change in behavior.
 *
@@ -1102,7 +1106,7 @@ program define reshapehelper, rclass
     * 7. Emit
     * =========================================================================
     di as txt _n "{hline 70}"
-    di as txt "reshapehelper 1.0.1 " as txt "{c |} " as res `NFULL' as txt " obs, " ///
+    di as txt "reshapehelper 1.0.2 " as txt "{c |} " as res `NFULL' as txt " obs, " ///
         as res `KFULL' as txt " vars" _c
     if "`xtpanel'`xttime'" != "" di as txt " {c |} xtset: " as res "`xtpanel' `xttime'" _c
     if "`svypsu'" != "" di as txt " {c |} svy psu: " as res "`svypsu'" _c
@@ -1146,7 +1150,10 @@ program define reshapehelper, rclass
         di as txt _n "suggested command" _c
         if "`notest'" != "" di as txt " (not dry-run tested):"
         else if `tested' di as txt " (dry-run " as res "PASSED" as txt " on `b_obs' sample obs):"
-        else di as txt " (dry-run " as err "FAILED" as txt ", r(" as err "`finalrc'" as txt ")):"
+        * the FAILED verdict is a report, not an error: -as err- output is never
+        * suppressed by -quietly-, which would leak a bare "FAILED198" out of
+        * -quietly reshapehelper-.  Genuine errors above still use -as err-.
+        else di as txt " (dry-run " as res "FAILED" as txt ", r(" as res "`finalrc'" as txt ")):"
         local ls = c(linesize)
         capture set linesize 255
         if `"`preline'"' != "" di as res `"  `preline'"'

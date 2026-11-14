@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.0.1  2026-11-09}{...}
+{* *! version 1.0.2  2026-11-14}{...}
 {viewerjumpto "Syntax" "reshapehelper##syntax"}{...}
 {viewerjumpto "Description" "reshapehelper##description"}{...}
 {viewerjumpto "What you get back" "reshapehelper##output"}{...}
@@ -29,16 +29,20 @@
 {synopt :{cmd:to(long}|{cmd:wide)}}the shape you want to END with; bare {cmd:long}/{cmd:wide} before the comma means the same thing{p_end}
 {synopt :{cmd:i(}{varlist}{cmd:)}}the identifier variable(s), if you know them{p_end}
 {synopt :{cmd:j(}{it:name}|{varname}{cmd:)}}going long: the NAME for the new j variable; going wide: the EXISTING j variable{p_end}
-{synopt :{cmd:stubs(}{it:names}{cmd:)}}the variable stubs, with {cmd:@} allowed, when the scanner cannot find them{p_end}
+{synopt :{opt stub:s(names)}}the variable stubs, with {cmd:@} allowed, when the scanner cannot find them{p_end}
 
 {syntab :Control}
-{synopt :{cmd:sample(}{it:#}{cmd:)}}rows used for the dry run and probes; default {cmd:sample(500)}{p_end}
-{synopt :{cmd:notest}}skip the preserve/restore dry run{p_end}
+{synopt :{opt samp:le(#)}}rows used for the dry run and probes; default {cmd:sample(500)}{p_end}
+{synopt :{opt notes:t}}skip the preserve/restore dry run{p_end}
 {synopt :{cmd:smcl(}{it:filename}{cmd:)}}write the unwrapped suggestion to this .smcl file (default: a session temp file){p_end}
 {synopt :{cmd:replace}}overwrite an existing {cmd:smcl()} file{p_end}
-{synopt :{cmd:global(}{it:name}{cmd:)}}global macro to hold the suggestion; default {cmd:$reshapehelper_cmd}{p_end}
-{synopt :{cmd:detail}}also show the pattern scan and the i/j candidate lists{p_end}
+{synopt :{opt gl:obal(name)}}global macro to hold the suggestion; default {cmd:$reshapehelper_cmd}{p_end}
+{synopt :{opt d:etail}}also show the pattern scan and the i/j candidate lists{p_end}
 {synoptline}
+{pstd}The marked stem of an option name is its minimum abbreviation, so
+{cmd:stubs()} may be typed {cmd:stub()}, {cmd:sample()} {cmd:samp()},
+{cmd:notest} {cmd:notes}, {cmd:global()} {cmd:gl()}, and {cmd:detail}
+{cmd:d}.  The option names shown unmarked must be typed in full.{p_end}
 {pstd}A bare {cmd:reshapehelper} with no arguments diagnoses the dataset in memory.{p_end}
 
 
@@ -49,7 +53,8 @@
 {help reshape} is the Stata command most likely to send an analyst to a
 discussion board: is this data wide or long, which variables are i and j,
 where does the {cmd:string} option go, why r(9), why
-{it:no xij variables found}?  {cmd:reshapehelper} answers those questions {it:before} anything is
+{it:no xij variables found}?
+{cmd:reshapehelper} answers those questions {it:before} anything is
 reshaped.  It never modifies your data.
 
 {pstd}
@@ -124,29 +129,32 @@ can give.{p_end}
 in {help reshape}: going long it NAMES the new variable to create; going
 wide it names the EXISTING variable whose values become suffixes.{p_end}
 
-{phang}{cmd:stubs(}{it:names}{cmd:)} hands over the stubs when the scanner
+{phang}{opt stub:s(names)} hands over the stubs when the scanner
 cannot find them {c 45} above all for bare string suffixes like
 {cmd:incm}/{cmd:incf}, which {cmd:reshapehelper} deliberately does not guess
 (the {help reshape} manual's own warning: beside an {cmd:agenda} variable, a
 greedy scan would happily read stub {cmd:age} with j {cmd:nda}).  {cmd:@}
 notation is allowed.{p_end}
 
-{phang}{cmd:sample(}{it:#}{cmd:)} caps the rows used for value probes and
+{phang}{opt samp:le(#)} caps the rows used for value probes and
 the dry run (default 500, minimum 10).  The suggestion is composed from the
 sample; on very tall data a larger sample buys confidence at the cost of
 speed.{p_end}
 
-{phang}{cmd:notest} skips the dry run; the suggestion is then composed from
+{phang}{opt notes:t} skips the dry run; the suggestion is then composed from
 name patterns and identifier tests alone and printed unmarked.{p_end}
 
 {phang}{cmd:smcl(}{it:filename}{cmd:)} and {cmd:replace} persist the
 unwrapped suggestion beyond the session; the default writes to a temp-dir
-file that the {it:click to VIEW} link opens.{p_end}
+file that the {it:click to VIEW} link opens.  A filename that does not
+already end in {cmd:.smcl} has that extension appended, so
+{cmd:smcl(mysuggestion)} writes {cmd:mysuggestion.smcl}; the path actually
+used is returned in {cmd:r(smcl)}.{p_end}
 
-{phang}{cmd:global(}{it:name}{cmd:)} renames the global holding the
+{phang}{opt gl:obal(name)} renames the global holding the
 suggestion (a chained second step lands in {it:name}{cmd:2}).{p_end}
 
-{phang}{cmd:detail} adds the scanner tallies and the i/j candidate lists to
+{phang}{opt d:etail} adds the scanner tallies and the i/j candidate lists to
 the header {c 45} useful when the suggestion surprises you.{p_end}
 
 
@@ -204,17 +212,24 @@ transpose case.{p_end}
 {synoptset 16 tabbed}{...}
 {synopt :{cmd:r(status)}}{cmd:ok} (suggestion composed), {cmd:blocked} (composed but the dry run failed; see {cmd:r(diagnosis)}), or {cmd:needinfo} (checklist shown){p_end}
 {synopt :{cmd:r(direction)}}{cmd:wide2long}, {cmd:long2wide}, {cmd:doubly}, or {cmd:unknown}{p_end}
-{synopt :{cmd:r(cmd)}, {cmd:r(cmd2)}}the suggested command(s){p_end}
-{synopt :{cmd:r(preclean)}}a data-cleaning line to run first (for example, stripping spaces from a string j){p_end}
+{synopt :{cmd:r(cmd)}, {cmd:r(cmd2)}}the suggested command(s); {cmd:r(cmd2)} when applicable (a chained doubly-wide pair){p_end}
+{synopt :{cmd:r(preclean)}}when applicable, a data-cleaning line to run first (for example, stripping spaces from a string j){p_end}
 {synopt :{cmd:r(i)}, {cmd:r(j)}, {cmd:r(stubs)}}the pieces the suggestion uses{p_end}
 {synopt :{cmd:r(icands)}, {cmd:r(jcands)}}the candidate lists considered{p_end}
-{synopt :{cmd:r(note)}, {cmd:r(caution)}, {cmd:r(diagnosis)}}the annotations printed under the suggestion{p_end}
-{synopt :{cmd:r(smcl)}}path of the SMCL suggestion file{p_end}
+{synopt :{cmd:r(note)}, {cmd:r(caution)}, {cmd:r(diagnosis)}}the annotations printed under the suggestion, each when applicable{p_end}
+{synopt :{cmd:r(smcl)}}path of the SMCL suggestion file, returned only when that file was written {c 45} that is, when {cmd:r(status)} is {cmd:ok} or {cmd:blocked}; a {cmd:needinfo} run writes no file and returns no {cmd:r(smcl)}.  The path carries the {cmd:.smcl} extension that {cmd:smcl()} appends when the filename you supply lacks it, so it need not match what you typed{p_end}
 {synopt :{cmd:r(tested)}}1 if the dry run passed, else 0{p_end}
 {synopt :{cmd:r(rc)}}the final dry-run return code{p_end}
 {synopt :{cmd:r(xpose)}}1 when the layout smells like a transpose job{p_end}
 {synopt :{cmd:r(sparse)}}a would-be identifier that was set aside as too sparse (returned only when that is why no command was found){p_end}
 {p2colreset}{...}
+
+{pstd}A macro that does not apply to a run is not stored at all, so it is
+absent from {cmd:return list} rather than returned empty, and which macros
+survive varies with the run.  A {cmd:needinfo} run, for instance, has no
+{cmd:r(cmd)} and no {cmd:r(smcl)}, yet may still report the piece it did
+settle on in {cmd:r(j)} beside its {cmd:r(diagnosis)}.  Test a macro for
+emptiness rather than assume it is there.{p_end}
 
 {pstd}The suggestion also lands in {cmd:$reshapehelper_cmd} (and
 {cmd:$reshapehelper_cmd2}); rename with {cmd:global()}.  The globals mirror
@@ -255,14 +270,30 @@ hunts for the row identifier, {cmd:reshapehelper} requires that a candidate
 wave, or condition), so a candidate that splits the sample into nearly as
 many groups as there are rows is set aside as an accident of the data rather
 than a design.  Concretely, the distinct groups must number at most half the
-rows examined.  This is what stops it proposing a technically-valid but
-meaningless {cmd:i(weight) j(mpg)} on {cmd:sysuse auto}.  The one trade-off:
+rows examined.  On {cmd:sysuse auto} the rule sets aside {cmd:make}: it does
+pair with {cmd:mpg} to identify the rows uniquely, but it names a different
+car in every row, so the run ends in the checklist with {cmd:r(sparse)}
+reporting {cmd:make} rather than in a technically-valid but meaningless
+widening on {cmd:i(make) j(mpg)}.  The one trade-off:
 a {it:genuinely sparse} panel {c 45} most units observed once, only a few
 repeated {c 45} can be sent to the checklist instead of getting a
 suggestion.  When that happens the checklist says so by name and offers to
 force the identifier ({cmd:reshapehelper, i(}{it:thatvar}{cmd:) ...}); if
 most rows really should share an id, the true identifier may be missing or
 mis-typed (for example a name with trailing spaces), so clean it first.{p_end}
+
+{pstd}{bf:The j-candidate ceiling.}  A second bar applies to j when the data
+are being widened.  A variable enters the j candidate list only if it takes
+at least 2 distinct values and at most 60 or half the sampled rows (rounded
+up), whichever is smaller, so beyond the half-the-rows rule there is an absolute
+ceiling of 60 distinct j values: a variable with more than 60 levels is
+read as an identifier or a measurement rather than an index, and is not
+proposed as j even in a very tall dataset.  The fallback pass, which runs
+when no candidate carries a time-like name ({cmd:year}, {cmd:wave},
+{cmd:visit}, and so on), is stricter still and stops at 30 distinct values.
+Naming the variable in {cmd:j()} bypasses both limits, which is the way to
+widen on a high-cardinality index deliberately {c 45} bearing in mind that
+each level becomes its own set of columns.{p_end}
 
 {pstd}{bf:Rerun it.}  {cmd:reshapehelper} is built to be run again on its own
 output: a wide-long panel widens one dimension per pass, and the note tells

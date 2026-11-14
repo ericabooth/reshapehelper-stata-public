@@ -54,7 +54,7 @@ From SSC (version 1.0.0):
 ssc install reshapehelper
 ```
 
-From GitHub (version 1.0.1, the latest):
+From GitHub (version 1.0.2, the latest):
 
 ```stata
 net install reshapehelper, from("https://raw.githubusercontent.com/ericabooth/reshapehelper-stata-public/main/") replace force
@@ -177,6 +177,12 @@ a stale command from an earlier dataset can never fire in a pipeline.
 
 ## Changes
 
+- **1.0.2 (2026-11-14):** restores two pieces of the SSC 1.0.0 release that
+  the 1.0.1 source had missed. A failed dry-run verdict prints as text again,
+  so `quietly reshapehelper` no longer leaks a bare `FAILED198`; and the help
+  again documents option abbreviations, the `.smcl` extension `smcl()` adds,
+  which returned macros appear only when they apply, and the 60-value ceiling
+  on j candidates.
 - **1.0.1 (2026-11-09):** documentation release. The help's
   "no xij variables found" markup now renders, the help points to this README
   and `example_reshapehelper.do` for runnable versions of the abbreviated

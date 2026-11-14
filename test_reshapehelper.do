@@ -1,5 +1,5 @@
 * ===========================================================================
-* test_reshapehelper.do -- test battery for reshapehelper v1.0.1
+* test_reshapehelper.do -- test battery for reshapehelper v1.0.2
 * Run in batch from the package directory:
 *     stata-mp -b do test_reshapehelper.do
 * Judge the run by the log: no r(NNN) errors, no "assertion is false".
@@ -645,5 +645,31 @@ end
 reshapehelper, to(wide)
 assert "`r(status)'" == "ok"
 assert "`r(sparse)'" == ""
+
+* ---------------------------------------------------------------------------
+* T26. REGRESSION (1.0.2): a failed dry-run verdict is text, not an error, so
+*      -quietly reshapehelper- prints nothing (1.0.1 leaked "FAILED110")
+* ---------------------------------------------------------------------------
+clear
+input id v v1 v2 v3
+1 9 10 11 12
+2 8 20 21 22
+end
+tempfile qlog
+log using "`qlog'", text replace name(t26)
+quietly reshapehelper
+local st26 "`r(status)'"
+log close t26
+assert "`st26'" == "blocked"
+tempname fh
+local leak 0
+file open `fh' using "`qlog'", read text
+file read `fh' line
+while r(eof) == 0 {
+    if strpos(`"`macval(line)'"', "FAILED") local leak 1
+    file read `fh' line
+}
+file close `fh'
+assert `leak' == 0
 
 di as res _n "test_reshapehelper.do: ALL TESTS PASSED"
